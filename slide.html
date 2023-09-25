@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Slider Header dengan Keterangan</title>
+    <style>
+        /* Gaya slider header (contoh) */
+        .slider-container {
+            width: 100%;
+            max-width: 1000px; /* Sesuaikan dengan lebar slide */
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden; /* Mengatur overflow agar gambar tidak terlihat di luar kontainer */
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out; /* Animasi perpindahan slide */
+        }
+
+        .slider-slide {
+            flex: 0 0 100%; /* Lebar masing-masing slide */
+            max-width: 1000px; /* Lebar slide */
+            position: relative;
+        }
+
+        .slider-image {
+            width: 100%;
+            height: 100%; /* Tinggi gambar 100% agar mengikuti tinggi slide */
+            object-fit: cover; /* Mengatur gambar agar terlihat penuh dalam slide tanpa merubah proporsi */
+        }
+
+        .slider-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            color: white;
+            padding: 10px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Gaya tombol next dan previous */
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+        }
+
+        .slider-nav-left {
+            left: 10px;
+        }
+
+        .slider-nav-right {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <i class="slider-nav slider-nav-left fas fa-chevron-left" onclick="prevSlide()"></i>
+        <div class="slider-wrapper">
+            <div class="slider-slide" data-caption="Gambar1">
+                <img class="slider-image" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fid.pinterest.com%2Fpin%2F715087247072928928%2F&psig=AOvVaw1mYks9txEWwX2_tXjJtsGm&ust=1695448849648000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCJiHuKXFvYEDFQAAAAAdAAAAABAE" alt="Slider Image">
+            </div>
+            <div class="slider-slide" data-caption="Gambar2">
+                <img class="slider-image" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fhd-background&psig=AOvVaw1mYks9txEWwX2_tXjJtsGm&ust=1695448849648000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCJiHuKXFvYEDFQAAAAAdAAAAABAb" alt="Slider Image">
+            </div>
+            <div class="slider-slide" data-caption="Gambar3">
+                <img class="slider-image" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fhd-background&psig=AOvVaw1mYks9txEWwX2_tXjJtsGm&ust=1695448849648000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCJiHuKXFvYEDFQAAAAAdAAAAABAl" alt="Slider Image">
+            </div>
+        </div>
+        <i class="slider-nav slider-nav-right fas fa-chevron-right" onclick="nextSlide()"></i>
+        <div class="slider-caption"></div>
+    </div>
+
+    <script>
+        // JavaScript untuk mengatur perpindahan otomatis antara slide
+        const sliderWrapper = document.querySelector('.slider-wrapper');
+        const sliderCaption = document.querySelector('.slider-caption');
+        let slideIndex = 0;
+
+        function showSlide(index) {
+            const translateX = `-${index * 100}%`;
+            sliderWrapper.style.transform = `translateX(${translateX})`;
+
+            // Memperbarui caption sesuai dengan data-caption slide yang sedang ditampilkan
+            sliderCaption.textContent = sliderWrapper.children[index].getAttribute('data-caption');
+        }
+
+        function prevSlide() {
+            slideIndex--;
+            if (slideIndex < 0) {
+                slideIndex = sliderWrapper.children.length - 1;
+            }
+            showSlide(slideIndex);
+        }
+
+        function nextSlide() {
+            slideIndex++;
+            if (slideIndex >= sliderWrapper.children.length) {
+                slideIndex = 0;
+            }
+            showSlide(slideIndex);
+        }
+
+        setInterval(nextSlide, 3000); // Perpindahan otomatis setiap 3 detik
+
+        // Memanggil fungsi showSlide untuk menampilkan slide pertama saat halaman dimuat
+        showSlide(slideIndex);
+    </script>
+</body>
+</html>
